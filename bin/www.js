@@ -1,8 +1,9 @@
 let app = require('../app');
 let debug = require('debug')('roboedusite:server');
 let http = require('http');
+require('dotenv').config()
 
-let port = 3333
+let port = process.env.PORT
 
 app.set('port', port);
 
