@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './routes/**/*.{html,js}',
-    './src/components/*.js'
+    './src/components/**/*.js'
   ],
   presets: [],
   darkMode: 'media', // or 'class'

@@ -1,5 +1,4 @@
-import { default as request, login } from '../request.js'; // import authkey from "../../authkey";
-// import "dotenv";
+import { default as request, login } from '../request.js';
 
 class LoginForm extends React.Component {
   constructor() {
@@ -9,11 +8,9 @@ class LoginForm extends React.Component {
       lname: null,
       pswd: null,
       status: null
-    }; // console.log(login("a","s","d"))
-
+    };
     this.changeField = this.changeField.bind(this);
-    this.submit = this.submit.bind(this);
-    this.getcourses = this.getcourses.bind(this);
+    this.submit = this.submit.bind(this); // this.getcourses = this.getcourses.bind(this);
   }
 
   changeField(event) {
@@ -33,10 +30,9 @@ class LoginForm extends React.Component {
       console.log(res);
       this.setState({
         fname: res[0].fname,
-        lname: res[0].lname,
-        status: res[0]["auth-key"]
+        lname: res[0].lname
       });
-      sessionStorage.setItem("test", res[0]["auth-key"]);
+      document.location.href = "/teacherListPage";
     }).catch(err => {
       console.log(err);
       this.setState({
@@ -44,15 +40,14 @@ class LoginForm extends React.Component {
       });
     });
     return;
-  }
+  } // getcourses() {
+  //     request.get("/courses", {}).then(res => {
+  //         console.log(res)
+  //     }).catch(err => {
+  //         console.log(err)
+  //     });
+  // }
 
-  getcourses() {
-    request.get("/courses", {}).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    });
-  }
 
   render() {
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -63,9 +58,9 @@ class LoginForm extends React.Component {
       className: "flex justify-center w-full m-auto rounded-3xl ml-7 mr-7",
       src: '../assets/logo.png'
     })), /*#__PURE__*/React.createElement("div", {
-      className: "flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full text-slate-900"
+      className: "flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full"
     }, /*#__PURE__*/React.createElement("p", {
-      className: "w-full border-2 bg-slate-900"
+      className: "w-full h-2 border-2 rounded bg-slate-600"
     }), /*#__PURE__*/React.createElement("form", {
       className: "flex flex-col h-full",
       onSubmit: this.submit
@@ -97,13 +92,8 @@ class LoginForm extends React.Component {
       type: "submit"
     }, /*#__PURE__*/React.createElement("span", {
       className: "text-2xl"
-    }, "Submit"))), /*#__PURE__*/React.createElement("button", {
-      className: "mt-20 ml-10 bg-blue-900 text-slate-100 rounded-md block w-2/3 px-3 h-12 sm:text-sm hover:bg-blue-900 hover:font-bold",
-      onClick: this.getcourses
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "text-2xl"
-    }, "GETCOURSES")), /*#__PURE__*/React.createElement("p", {
-      className: "w-full border-2 bg-slate-900"
+    }, "Submit"))), /*#__PURE__*/React.createElement("p", {
+      className: "w-full h-2 border-2 rounded bg-slate-600"
     })));
   }
 

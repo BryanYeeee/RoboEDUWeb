@@ -1,6 +1,4 @@
 import { default as request, login } from '../request.js';
-// import authkey from "../../authkey";
-// import "dotenv";
 
 class LoginForm extends React.Component {
     constructor() {
@@ -11,10 +9,9 @@ class LoginForm extends React.Component {
             pswd: null,
             status: null
         }
-        // console.log(login("a","s","d"))
         this.changeField = this.changeField.bind(this);
         this.submit = this.submit.bind(this);
-        this.getcourses = this.getcourses.bind(this);
+        // this.getcourses = this.getcourses.bind(this);
     }
     changeField(event) {
         console.log(event);
@@ -29,9 +26,8 @@ class LoginForm extends React.Component {
             this.setState({
                 fname: res[0].fname,
                 lname: res[0].lname,
-                status: res[0]["auth-key"]
             });
-            sessionStorage.setItem("test", res[0]["auth-key"]);
+            document.location.href = "/teacherListPage";
         }).catch(err => {
             console.log(err)
             this.setState({
@@ -40,15 +36,15 @@ class LoginForm extends React.Component {
         });
         return;
     }
-    getcourses() {
-        request.get("/courses", {}).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        });
+    // getcourses() {
+    //     request.get("/courses", {}).then(res => {
+    //         console.log(res)
+    //     }).catch(err => {
+    //         console.log(err)
+    //     });
         
 
-    }
+    // }
 
     render() {
         return (
@@ -57,8 +53,8 @@ class LoginForm extends React.Component {
                     <h1 className='absolute text-center text-6xl w-full h-1/2 mt-7 font-bold'>LOGIN</h1>
                     <img className='flex justify-center w-full m-auto rounded-3xl ml-7 mr-7' src={'../assets/logo.png'} />
                 </div>
-                <div className='flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full text-slate-900'>
-                    <p className="w-full border-2 bg-slate-900"></p>
+                <div className='flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full'>
+                    <p className="w-full h-2 border-2 rounded bg-slate-600"></p>
                     <form className="flex flex-col h-full" onSubmit={this.submit}>
                         <label className='mt-10 ml-10 block text-lg font-semibold leading-6'>First name:</label>
                         <input className='input' id="fname" type="text" onChange={this.changeField} />
@@ -75,11 +71,11 @@ class LoginForm extends React.Component {
                         </button>
                     </form>
 
-                        <button className='mt-20 ml-10 bg-blue-900 text-slate-100 rounded-md block w-2/3 px-3 h-12 sm:text-sm hover:bg-blue-900 hover:font-bold' onClick={this.getcourses}>
+                        {/* <button className='mt-20 ml-10 bg-blue-900 text-slate-100 rounded-md block w-2/3 px-3 h-12 sm:text-sm hover:bg-blue-900 hover:font-bold' onClick={this.getcourses}>
                             <span className="text-2xl">GETCOURSES</span>
-                        </button>
+                        </button> */}
                     {/* <p className="bg-blue-500">{this.state.fname} {this.state.lname}123</p> */}
-                    <p className="w-full border-2 bg-slate-900"></p>
+                    <p className="w-full h-2 border-2 rounded bg-slate-600"></p>
                 </div>
             </div>
         );
