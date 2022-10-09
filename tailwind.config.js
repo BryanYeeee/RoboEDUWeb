@@ -41,7 +41,7 @@ module.exports = {
       purple: colors.purple,
       fuchsia: colors.fuchsia,
       pink: colors.pink,
-      rose: colors.rose,
+      rose: colors.rose
     }),
     columns: {
       auto: 'auto',
@@ -107,6 +107,8 @@ module.exports = {
       72: '18rem',
       80: '20rem',
       96: '24rem',
+      112: '28rem',
+      140: '35rem',
     },
     animation: {
       none: 'none',
@@ -330,6 +332,7 @@ module.exports = {
       '3/6': '50%',
       '4/6': '66.666667%',
       '5/6': '83.333333%',
+      '1/10': '10%',
       '1/12': '8.333333%',
       '2/12': '16.666667%',
       '3/12': '25%',
@@ -540,6 +543,7 @@ module.exports = {
       '3/6': '50%',
       '4/6': '66.666667%',
       '5/6': '83.333333%',
+      '1/10': '10%',
       full: '100%',
       screen: '100vh',
       min: 'min-content',
@@ -616,6 +620,7 @@ module.exports = {
     },
     margin: ({ theme }) => ({
       auto: 'auto',
+      '1/10': '10%',
       ...theme('spacing'),
     }),
     maxHeight: ({ theme }) => ({

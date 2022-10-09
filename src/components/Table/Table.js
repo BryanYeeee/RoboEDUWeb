@@ -1,22 +1,12 @@
-import { default as request, login } from '../../request.js';
+import { default as request} from '../../request.js';
 
-class Table extends React.Component {
-    constructor(props) {
-        super();
-        console.log(props)
-    }
+export default function Table(content) {
+    console.log(content.props);
+    let [headers, setHeaders] = React.useState({});
 
-    render() {
-        return (
-            <div>
-                <div className='flex pt-7 pb-7 absolute bg-green-100 w-2/5 h-full text-slate-100'>
-                    CAMPBELL SOUP
-                </div>
-            </div>
-        );
-    }
+    return (
+        <div className='flex w-4/5 my-16 h-auto m-auto border-2 border-slate-400 rounded bg-slate-300 text-slate-900'>
+            {content.props.children}
+        </div>
+    );
 }
-
-const root = ReactDOM.createRoot(document.querySelector('#table'));
-console.log(root)
-root.render(<Table />);
