@@ -1,4 +1,4 @@
-export const Navitems = [
+export const NavItems = [
     {
         title: 'Schedule',
         url: '/'
@@ -17,6 +17,6 @@ export const Navitems = [
     },
     {
         title: 'Courses',
-        url: '/'
+        url: '/coursePage'
     },
 ]

@@ -9,7 +9,7 @@ export const NavItems = [{
   url: '/'
 }, {
   title: 'Teachers',
-  url: '/teacherListPage'
+  url: '/'
 }, {
   title: 'Courses',
   url: '/coursePage'

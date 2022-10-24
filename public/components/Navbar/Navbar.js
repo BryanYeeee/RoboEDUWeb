@@ -3,6 +3,7 @@ import { NavItems } from "./Navitems.js";
 function Navbar() {
   //xl = full window
   //lg = unflex
+  // console.log("asd")
   return /*#__PURE__*/React.createElement("div", {
     className: "lg:fixed lg:top-0 w-full lg:flex justify-between h-112 lg:h-20 xl:px-24 px-10 py-2 bg-slate-700 duration-700"
   }, /*#__PURE__*/React.createElement("div", {

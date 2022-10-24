@@ -108,6 +108,7 @@ module.exports = {
       80: '20rem',
       96: '24rem',
       112: '28rem',
+      132: '33rem',
       140: '35rem',
     },
     animation: {
@@ -925,6 +926,8 @@ module.exports = {
       min: 'min-content',
       max: 'max-content',
       fit: 'fit-content',
+      '1/10': '10%',
+      '3/10': '30%',
     }),
     willChange: {
       auto: 'auto',
