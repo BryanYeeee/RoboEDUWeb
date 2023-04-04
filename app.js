@@ -25,6 +25,9 @@ app.use('/teacherListPage', teacherListRouter);
 let courseRouter = require('./routes/coursePage/coursePage');
 app.use('/coursePage', courseRouter);
 
+let addCoursePageRouter = require('./routes/addCoursePage/addCoursePage');
+app.use('/addCoursePage', addCoursePageRouter);
+
 app.get("/123", function(req,res,next) {
   res.status(200).send("SDCFVGBNM<>ERTYUJKL:")
 })

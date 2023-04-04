@@ -22,12 +22,17 @@ function CourseTable() {
     request.get("/courses", {}).then(res => {
       res.sort((a, b) => {
         return topics[a.Topic][0] > topics[b.Topic][0] ? 1 : -1;
-      });
-      console.table(res);
+      }); // console.table(res)
+
       setData(res);
     }).catch(err => {
       console.log(err);
-    });
+    }); // request.post("/parents/getorders", {
+    //     parentid: 22
+    // }).then(res => {
+    // }).catch(err => {
+    //     console.log(err)
+    // });
   }, []);
   React.useEffect(() => {
     setLessons([{}]);
