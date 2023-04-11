@@ -56,7 +56,7 @@ function CourseTable() {
 
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "w-4/5 mt-28 m-auto text-2xl border-b-4 border-slate-600 text-right"
-  }, "COURSES"), TabBar(["Science", "Maker", "Algorithms", "Robotics", "Technology"], curTab, setTab), /*#__PURE__*/React.createElement("div", {
+  }, "COURSES"), TabBar(["Science", "Maker", "Algorithms", "Robotics", "Technology"], curTab, setTab, true), /*#__PURE__*/React.createElement("div", {
     className: "flex w-4/5 mb-16 h-auto m-auto border-2 border-slate-400 rounded bg-slate-300 text-slate-900"
   }, /*#__PURE__*/React.createElement("div", null, data.map((item, index) => {
     return (topics[item.Topic][0] == curTab || curTab == -1) && /*#__PURE__*/React.createElement("div", {

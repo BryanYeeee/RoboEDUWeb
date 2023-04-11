@@ -61,7 +61,7 @@ function CourseTable() {
             <div className='w-4/5 mt-28 m-auto text-2xl border-b-4 border-slate-600 text-right'>
                 COURSES
             </div>
-            {TabBar(["Science", "Maker", "Algorithms", "Robotics", "Technology"], curTab, setTab)}
+            {TabBar(["Science", "Maker", "Algorithms", "Robotics", "Technology"], curTab, setTab,true)}
             <div className='flex w-4/5 mb-16 h-auto m-auto border-2 border-slate-400 rounded bg-slate-300 text-slate-900'>
                 <div>
                     {data.map((item, index) => {
