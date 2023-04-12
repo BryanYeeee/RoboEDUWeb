@@ -1,12 +1,31 @@
 import { default as request } from '../../request.js';
 export function Form(format, formdata, options, endPoint, returnPage) {
   // console.log(format, formdata)
+
+  /* Form Options:
+  No option/default: text input
+  'number': number only input
+  'range', [input type 1, input type 2]: 2 side by side inputs
+  'dropdown', Array: dropdown selection from the provided array
+  'selector', Array, boolean: search and select from array, boolean = true for multi-select array, false for 1 selection
+  For radio selection use TabBar component
+  */
   function setData(inputTitle, inputData, index) {
-    if (index !== undefined) {
+    console.log(inputData, index);
+
+    if (index == -1) {
+      if (formdata[inputTitle].includes(inputData)) {
+        formdata[inputTitle].splice(formdata[inputTitle].indexOf(inputData), 1);
+      } else {
+        formdata[inputTitle].push(inputData);
+      }
+    } else if (index !== undefined) {
       formdata[inputTitle][index] = inputData;
     } else {
       formdata[inputTitle] = inputData;
     }
+
+    console.log(formdata[inputTitle]);
   }
 
   function submit() {
@@ -52,11 +71,24 @@ export function Form(format, formdata, options, endPoint, returnPage) {
 export function Row(props) {
   let content = props.content;
   let options = props.options;
-  console.log(options);
+  let [filter, setFilter] = React.useState('');
+  let [render, rerender] = React.useState(false);
+  console.log(options, content);
+
+  function selectorCallback(key, selection) {
+    props.handleCallback(key, selection, options[key][2] ? -1 : undefined);
+
+    if (!options[key][2]) {
+      content[key] = selection;
+    }
+
+    rerender(!render);
+  }
+
   return /*#__PURE__*/React.createElement("div", {
-    className: "flex w-full border-2 border-slate-400",
+    className: "flex items-center w-full border-2 border-slate-400",
     style: {
-      'min-height': "5rem"
+      minHeight: "5rem"
     }
   }, !props.submit ? Object.keys(content).map((key, i) => /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col p-2 h-full flex-grow",
@@ -71,10 +103,10 @@ export function Row(props) {
   }) || options[key][0] == 'dropdown' && /*#__PURE__*/React.createElement("select", {
     defaultValue: content[key],
     onChange: e => props.handleCallback(key, e.target.value)
-  }, options[key][1].map((key, i) => /*#__PURE__*/React.createElement("option", {
+  }, options[key][1].map((val, i) => /*#__PURE__*/React.createElement("option", {
     key: i,
-    value: key
-  }, key))) || options[key][0] == 'range' && /*#__PURE__*/React.createElement("div", {
+    value: val
+  }, val))) || options[key][0] == 'range' && /*#__PURE__*/React.createElement("div", {
     className: "flex flex-grow w-full gap-4"
   }, /*#__PURE__*/React.createElement("input", {
     className: "flex-1",
@@ -86,7 +118,25 @@ export function Row(props) {
     type: options[key][1][1],
     defaultValue: content[key][1],
     onChange: e => props.handleCallback(key, e.target.value, 1)
-  })))) : /*#__PURE__*/React.createElement("div", {
+  })) || options[key][0] == 'selector' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("input", {
+    className: "p-2",
+    value: '[' + content[key] + ']',
+    readOnly: true
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "w-auto p-2 mt-8 mx-8",
+    placeholder: 'Search List',
+    onChange: e => setFilter(e.target.value)
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "flex p-2 mx-8 mb-8 flex-wrap overflow-y-auto items-start justify-around w-auto border-2 border-slate-400 gap-y-2",
+    style: {
+      minHeight: "15rem",
+      maxHeight: "15rem"
+    }
+  }, options[key][1].filter(x => x.includes(filter)).map((option, i) => /*#__PURE__*/React.createElement("div", {
+    className: 'flex items-center justify-center w-2/5 py-1 border-2 border-slate-400 rounded-full ' + (content[key].includes(option) ? 'bg-slate-400' : 'bg-slate-200'),
+    key: i,
+    onClick: e => selectorCallback(key, option)
+  }, option)))))) : /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-center h-full flex-grow"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-center px-14 bg-blue-900 text-slate-100 rounded-md text-sm sm:text-2xl hover:bg-blue-900 hover:font-bold",

@@ -2,13 +2,30 @@ import { default as request } from '../../request.js';
 
 export function Form(format, formdata, options, endPoint, returnPage) {
     // console.log(format, formdata)
+    /* Form Options:
+    No option/default: text input
+    'number': number only input
+    'range', [input type 1, input type 2]: 2 side by side inputs
+    'dropdown', Array: dropdown selection from the provided array
+    'selector', Array, boolean: search and select from array, boolean = true for multi-select array, false for 1 selection
+    For radio selection use TabBar component
+    */
 
-    function setData(inputTitle, inputData,index) {
-        if(index !== undefined) {
+
+    function setData(inputTitle, inputData, index) {
+        console.log(inputData, index)
+        if (index == -1) {
+            if (formdata[inputTitle].includes(inputData)) {
+                formdata[inputTitle].splice(formdata[inputTitle].indexOf(inputData), 1);
+            } else {
+                formdata[inputTitle].push(inputData)
+            }
+        } else if (index !== undefined) {
             formdata[inputTitle][index] = inputData
         } else {
             formdata[inputTitle] = inputData;
         }
+        console.log(formdata[inputTitle])
     }
 
     function submit() {
@@ -49,10 +66,20 @@ export function Form(format, formdata, options, endPoint, returnPage) {
 export function Row(props) {
     let content = props.content
     let options = props.options
-    console.log(options)
+    let [filter, setFilter] = React.useState('');
+    let [render, rerender] = React.useState(false)
+    console.log(options, content)
+
+    function selectorCallback(key, selection) {
+        props.handleCallback(key, selection, options[key][2] ? -1 : undefined);
+        if (!options[key][2]) {
+            content[key] = selection
+        }
+        rerender(!render);
+    }
 
     return (
-        <div className='flex w-full border-2 border-slate-400' style={{'min-height': "5rem"}}>
+        <div className='flex items-center w-full border-2 border-slate-400' style={{ minHeight: "5rem" }}>
             {
                 !props.submit ?
                     Object.keys(content).map((key, i) =>
@@ -60,19 +87,32 @@ export function Row(props) {
                             <p>{key.toUpperCase()}</p>
                             {options[key] == null ? <input defaultValue={content[key]} onChange={e => props.handleCallback(key, e.target.value)} />
                                 :
-                                (options[key][0] == 'number' && <input type="number" defaultValue={content[key]} onChange={e => props.handleCallback(key, e.target.value)} />) || 
+                                (options[key][0] == 'number' && <input type="number" defaultValue={content[key]} onChange={e => props.handleCallback(key, e.target.value)} />) ||
                                 (options[key][0] == 'dropdown' &&
-                                <select defaultValue={content[key]} onChange={e => props.handleCallback(key, e.target.value)}>
-                                    {options[key][1].map((key, i) =>
-                                        <option key={i} value={key}>{key}</option>
-                                    )}
-                                </select>) ||
+                                    <select defaultValue={content[key]} onChange={e => props.handleCallback(key, e.target.value)}>
+                                        {options[key][1].map((val, i) =>
+                                            <option key={i} value={val}>{val}</option>
+                                        )}
+                                    </select>) ||
                                 (options[key][0] == 'range' &&
-                                <div className='flex flex-grow w-full gap-4'>
-                                    <input className="flex-1" type={options[key][1][0]} defaultValue={content[key][0]} onChange={e => props.handleCallback(key, e.target.value,0)} />
-                                    <p>TO</p>
-                                    <input className="flex-1" type={options[key][1][1]}  defaultValue={content[key][1]} onChange={e => props.handleCallback(key, e.target.value,1)} />
-                                </div>)
+                                    <div className='flex flex-grow w-full gap-4'>
+                                        <input className="flex-1" type={options[key][1][0]} defaultValue={content[key][0]} onChange={e => props.handleCallback(key, e.target.value, 0)} />
+                                        <p>TO</p>
+                                        <input className="flex-1" type={options[key][1][1]} defaultValue={content[key][1]} onChange={e => props.handleCallback(key, e.target.value, 1)} />
+                                    </div>) ||
+                                (options[key][0] == 'selector' &&
+                                    <>
+                                        <input className="p-2" value={'[' + content[key] + ']'} readOnly />
+                                        <input className="w-auto p-2 mt-8 mx-8" placeholder={'Search List'} onChange={e => setFilter(e.target.value)} />
+                                        <div className='flex p-2 mx-8 mb-8 flex-wrap overflow-y-auto items-start justify-around w-auto border-2 border-slate-400 gap-y-2' style={{ minHeight: "15rem", maxHeight: "15rem" }}>
+                                            {options[key][1].filter(x => x.includes(filter)).map((option, i) =>
+                                                <div className={'flex items-center justify-center w-2/5 py-1 border-2 border-slate-400 rounded-full ' + (content[key].includes(option) ? 'bg-slate-400' : 'bg-slate-200')} key={i} onClick={e => selectorCallback(key, option)}>{option}</div>
+                                            )
+                                            }
+                                        </div>
+                                    </>
+
+                                )
                             }
                         </div>
                     )
