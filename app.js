@@ -19,14 +19,15 @@ let indexRouter = require('./routes/index/index');
 app.use('/', indexRouter);
 
 
-let teacherListRouter = require('./routes/teacherListPage/teacherListPage');
-app.use('/teacherListPage', teacherListRouter);
+app.use('/teacherListPage', require('./routes/teacherListPage/teacherListPage'));
 
-let courseRouter = require('./routes/coursePage/coursePage');
-app.use('/coursePage', courseRouter);
+app.use('/courseListPage', require('./routes/courseListPage/courseListPage'));
 
-let addCoursePageRouter = require('./routes/addCoursePage/addCoursePage');
-app.use('/addCoursePage', addCoursePageRouter);
+app.use('/addCoursePage', require('./routes/addCoursePage/addCoursePage'));
+
+app.use('/addCoursePage', require('./routes/addCoursePage/addCoursePage'));
+
+app.use('/addTeacherPage', require('./routes/addTeacherPage/addTeacherPage'));
 
 app.get("/123", function(req,res,next) {
   res.status(200).send("SDCFVGBNM<>ERTYUJKL:")

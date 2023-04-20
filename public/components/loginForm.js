@@ -27,7 +27,7 @@ function LoginForm() {
   }, /*#__PURE__*/React.createElement("h1", {
     className: "absolute text-center text-6xl w-full h-1/2 mt-7 font-bold"
   }, "LOGIN"), /*#__PURE__*/React.createElement("img", {
-    className: "flex justify-center w-full m-auto rounded-3xl ml-7 mr-7",
+    className: "flex justify-center w-auto m-auto rounded-3xl ml-7 mr-7",
     src: '../assets/logo.png'
   })), /*#__PURE__*/React.createElement("div", {
     className: "flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full"

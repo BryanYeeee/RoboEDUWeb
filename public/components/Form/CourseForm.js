@@ -3,10 +3,21 @@ import { Form } from './Form.js';
 import { default as TabBar } from '../Navbar/TabBar.js';
 
 function CourseForm() {
-  // let [data, setData] = React.useState([])
   let [format, setFormat] = React.useState(0); //0: Individualized, 1: Term
 
-  let [lessons, setLessons] = React.useState(['abc', 'def', 'ghi', 'jahk', 'lmn', 'opcq', 'rsdt', 'uvw', 'xyz']); // React.useEffect(
+  let [lessons, setLessons] = React.useState([{
+    name: 'abc'
+  }, {
+    name: 'ada'
+  }, {
+    name: 'sefes'
+  }, {
+    name: 'edsfe'
+  }, {
+    name: 'asdas'
+  }, {
+    name: 'asdfsfd'
+  }]); // React.useEffect(
   //     () => {
   //         request.get("/lessons", {}).then(res => {
   //             // console.table(res)
@@ -24,23 +35,28 @@ function CourseForm() {
     coursecreditcost: ['number'],
     duration: ['number'],
     agegroup: ['range', ['number', 'number']],
-    prerequisties: ['selector', lessons, true]
+    prerequisties: ['selector', lessons, 'name', true]
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col w-4/5 mt-28 m-auto text-2xl border-b-4 border-slate-600 text-right"
-  }, "ADD COURSES"), TabBar(["Individual", "Term"], format, setFormat, false), format == 0 && Form([1, 2, 2, 1, 1, 1, 1, 1], {
+    className: "flex justify-between w-4/5 mt-28 m-auto text-2xl border-b-4 border-slate-600"
+  }, "ADD COURSES ", /*#__PURE__*/React.createElement("a", {
+    className: "h-full",
+    href: '/courseListPage'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "w-20 h-4/5 rounded border-slate-600 text-center hover:shadow-2xl hover:text-slate-200 hover:bg-slate-800 bg-slate-400 duration-500"
+  }, "BACK"))), TabBar(["Individual", "Term"], format, setFormat, false), format == 0 && Form([1, 2, 2, 1, 1, 1, 1, 1], {
     name: '',
     topic: '',
     stage: '',
     coursecreditcost: '',
     duration: '',
     agegroup: new Array(2),
-    prerequisties: [1, 2, 3],
+    prerequisties: [],
     description: '',
     abilities: '',
     milestones: '',
     format: format
-  }, Object.assign(formOptions, {}), '/courses/newcourse', '/coursePage'), format == 1 && Form([1, 2, 2, 1, 1, 1, 1], {
+  }, formOptions, '/courses/newcourse', '/courseListPage'), format == 1 && Form([1, 2, 2, 1, 1, 1, 1], {
     name: '',
     topic: '',
     stage: '',
@@ -53,7 +69,7 @@ function CourseForm() {
     format: format
   }, Object.assign(formOptions, {
     length: ['number']
-  }), '/courses/newcourse', '/coursePage'));
+  }), '/courses/newcourse', '/courseListPage'));
 }
 
 const root = ReactDOM.createRoot(document.querySelector('#courseform'));

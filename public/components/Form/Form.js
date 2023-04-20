@@ -7,7 +7,7 @@ export function Form(format, formdata, options, endPoint, returnPage) {
   'number': number only input
   'range', [input type 1, input type 2]: 2 side by side inputs
   'dropdown', Array: dropdown selection from the provided array
-  'selector', Array, boolean: search and select from array, boolean = true for multi-select array, false for 1 selection
+  'selector', Array, field, boolean: search and select from array, boolean = true for multi-select array, false for 1 selection
   For radio selection use TabBar component
   */
   function setData(inputTitle, inputData, index) {
@@ -30,12 +30,12 @@ export function Form(format, formdata, options, endPoint, returnPage) {
 
   function submit() {
     console.log(formdata, endPoint);
-    document.location = returnPage; // request.post(endPoint, formdata).then(res => {
-    //     console.log('very cool')
-    //     //goes back
-    // }).catch(err => {
-    //     console.log(err)
-    // });
+    request.post(endPoint, formdata).then(res => {
+      console.log('very cool');
+      document.location = returnPage;
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   let content = [{}];
@@ -76,9 +76,9 @@ export function Row(props) {
   console.log(options, content);
 
   function selectorCallback(key, selection) {
-    props.handleCallback(key, selection, options[key][2] ? -1 : undefined);
+    props.handleCallback(key, selection, !options[key][3] ? undefined : -1);
 
-    if (!options[key][2]) {
+    if (!options[key][3]) {
       content[key] = selection;
     }
 
@@ -120,7 +120,7 @@ export function Row(props) {
     onChange: e => props.handleCallback(key, e.target.value, 1)
   })) || options[key][0] == 'selector' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("input", {
     className: "p-2",
-    value: '[' + content[key] + ']',
+    value: !options[key][3] ? content[key][options[key][2]] : formatJsonArray(content[key], options[key][2]),
     readOnly: true
   }), /*#__PURE__*/React.createElement("input", {
     className: "w-auto p-2 mt-8 mx-8",
@@ -132,14 +132,26 @@ export function Row(props) {
       minHeight: "15rem",
       maxHeight: "15rem"
     }
-  }, options[key][1].filter(x => x.includes(filter)).map((option, i) => /*#__PURE__*/React.createElement("div", {
-    className: 'flex items-center justify-center w-2/5 py-1 border-2 border-slate-400 rounded-full ' + (content[key].includes(option) ? 'bg-slate-400' : 'bg-slate-200'),
+  }, options[key][1].filter(x => x[options[key][2]].includes(filter)).map((option, i) => /*#__PURE__*/React.createElement("div", {
+    className: 'flex items-center justify-center w-2/5 py-1 border-2 border-slate-400 rounded-full ' + ((!options[key][3] ? content[key] == option : content[key].includes(option)) ? 'bg-slate-400' : 'bg-slate-200'),
     key: i,
     onClick: e => selectorCallback(key, option)
-  }, option)))))) : /*#__PURE__*/React.createElement("div", {
+  }, option[options[key][2]])))))) : /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-center h-full flex-grow"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex items-center justify-center px-14 bg-blue-900 text-slate-100 rounded-md text-sm sm:text-2xl hover:bg-blue-900 hover:font-bold",
     onClick: () => props.handleCallback()
   }, "SUBMIT")));
+}
+
+function formatJsonArray(array, field) {
+  console.log(array, field);
+  if (array.length == 0) return "[]";
+  let formatted = "[ " + array[0][field];
+
+  for (let i = 1; i < array.length; i++) {
+    formatted += " , " + array[i][field];
+  }
+
+  return formatted + " ]";
 }

@@ -37,13 +37,14 @@ export default function request(api, method, data) {
         }
     }
     if (method == 'post') {
-        data.authkey = "f99b3e0accc55b4e8df73e83e430590257dc03a4f6ac859608773d0952a04acee359c7dfeced23be88fac3a7f160e836"// USE　sessionStorage.getItem("authkey") ON PUBLISH
+        data.authkey = ""// USE　sessionStorage.getItem("authkey") ON PUBLISH
         fetchinput.body = JSON.stringify(data);
     } 
 
+    console.log(data)
     return new Promise((resolve, reject) => {
         fetch(`https://students.csaafuture.cn${api}`, fetchinput).then(res => {
-            // fetch(`http://localhost:160${api}`, fetchinput).then(res => {
+        //     fetch(`http://localhost:160${api}`, fetchinput).then(res => {
             console.log(res)
             status = res.status;
             return res.json();

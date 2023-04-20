@@ -26,7 +26,7 @@ function LoginForm() {
         <div>
             <div className='flex pt-7 pb-7 absolute bg-blue-600 w-2/5 h-full text-slate-100'>
                 <h1 className='absolute text-center text-6xl w-full h-1/2 mt-7 font-bold'>LOGIN</h1>
-                <img className='flex justify-center w-full m-auto rounded-3xl ml-7 mr-7' src={'../assets/logo.png'} />
+                <img className='flex justify-center w-auto m-auto rounded-3xl ml-7 mr-7' src={'../assets/logo.png'} />
             </div>
             <div className='flex flex-col px-20 py-10 drop-shadow-2xl overflow-auto absolute bg-slate-100 w-3/5 right-0 h-full'>
                 <p className="w-full h-2 border-2 rounded bg-slate-600"></p>

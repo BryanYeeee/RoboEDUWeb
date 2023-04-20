@@ -1,9 +1,9 @@
 import { default as request } from '../../request.js';
-import { default as Table, Cell, Row, Header } from './Table.js';
+import { default as Table, Cell, Row, Header } from '../Table/Table.js';
 // import { default as Table } from './Table.js';
 import { default as TabBar } from '../Navbar/TabBar.js';
 
-function CourseTable() {
+function CourseList() {
     let [data, setData] = React.useState([])
     let [lessons, setLessons] = React.useState();
     // let [lessons, setLessons] = React.useState([]);
@@ -113,5 +113,5 @@ function CourseTable() {
     );
 }
 
-const root = ReactDOM.createRoot(document.querySelector('#coursetable'));
-root.render(<CourseTable />);
+const root = ReactDOM.createRoot(document.querySelector('#courselist'));
+root.render(<CourseList />);
